@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Alerta from "./Alerta";
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, borrarLocal}) => {
 
     const [nombre, setNombre] = useState("");
     const [propietario, setPropietario] = useState("");
@@ -92,6 +92,8 @@ const Formulario = ({ pacientes, setPacientes }) => {
 
                 <input type="submit" className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 hover:cursor-pointer transition-all" value="Agregar Paciente" />
 
+
+                <input type="button" value="Borrar Todo" onClick={borrarLocal} />
             </form>
 
         </div>
