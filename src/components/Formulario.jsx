@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Alerta from "./Alerta";
 
-const Formulario = ({ pacientes, setPacientes, borrarLocal}) => {
+const Formulario = ({ pacientes, setPacientes, borrarLocal, paciente }) => {
 
     const [nombre, setNombre] = useState("");
     const [propietario, setPropietario] = useState("");
@@ -9,6 +9,18 @@ const Formulario = ({ pacientes, setPacientes, borrarLocal}) => {
     const [alta, setAlta] = useState("");
     const [sintomas, setSintomas] = useState("");
     const [alerta, setAlerta] = useState({})
+
+    useEffect(() => {
+
+        if (Object.keys(paciente).length !== 0) {
+            setNombre(paciente.nombre);
+        }
+
+    }, [paciente])
+
+    const generarId = () => {
+        return Math.random().toString(32).substring(2);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,16 +37,19 @@ const Formulario = ({ pacientes, setPacientes, borrarLocal}) => {
             mensaje: "Paciente registrado"
         })
 
+        const nuevoPaciente = {
+            nombre,
+            propietario,
+            email,
+            alta,
+            sintomas,
+            id: generarId()
+        }
+
         setPacientes(
             [
                 ...pacientes,
-                {
-                    nombre,
-                    propietario,
-                    email,
-                    alta,
-                    sintomas
-                }
+                nuevoPaciente
             ]
         )
 
@@ -43,6 +58,10 @@ const Formulario = ({ pacientes, setPacientes, borrarLocal}) => {
         setEmail("")
         setAlta("")
         setSintomas("")
+
+        setTimeout(() => {
+            setAlerta({})
+        }, 3000)
     }
 
     const { mensaje } = alerta;

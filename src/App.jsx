@@ -9,11 +9,14 @@ function App() {
     JSON.parse(localStorage.getItem("pacientes")) || []
   )
 
+  const [paciente, setPaciente] = useState({})
+  const [editando, setEditando] = useState(false)
+
   const guardar = () => {
     localStorage.setItem("pacientes", JSON.stringify(pacientes))
   }
 
-  const borrarLocal = ()=>{
+  const borrarLocal = () => {
     localStorage.removeItem("pacientes")
     setPacientes([]);
   }
@@ -27,8 +30,14 @@ function App() {
       <Header />
 
       <div className="mt-12 md:flex">
-        <Formulario pacientes={pacientes} setPacientes={setPacientes} borrarLocal={borrarLocal}/>
-        <ListadoPacientes pacientes={pacientes} setPacientes={setPacientes}/>
+        <Formulario
+          pacientes={pacientes} setPacientes={setPacientes}
+          borrarLocal={borrarLocal} paciente={paciente} />
+
+        <ListadoPacientes
+          pacientes={pacientes} setPacientes={setPacientes}
+          setPaciente={setPaciente} setEditando={setEditando}
+        />
       </div>
 
     </div>
